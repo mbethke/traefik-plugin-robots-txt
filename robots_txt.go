@@ -104,6 +104,8 @@ func (p *RobotsTxtPlugin) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		body = wrappedWriter.buffer.String() + "\n"
 	}
 
+	body += "# Added on the fly\n"
+
 	if p.aiRobotsTxt {
 		aiRobotsTxt, err := p.fetchAiRobotsTxt()
 		if err != nil {
