@@ -66,7 +66,6 @@ type RobotsTxtPlugin struct {
 	next         http.Handler
 }
 
-// New created a new Demo plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	if len(config.CustomRules) == 0 && !config.AiRobotsTxt {
 		return nil, fmt.Errorf("set customRules or set aiRobotsTxt to true")
@@ -104,9 +103,6 @@ func (p *RobotsTxtPlugin) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	if !p.overwrite && wrappedWriter.backendStatusCode != http.StatusNotFound {
 		body = wrappedWriter.buffer.String() + "\n"
 	}
-
-	body += "# The following content was added on the fly by the Robots.txt Traefik plugin: " +
-		"https://plugins.traefik.io/plugins/681b2f3fba3486128fc34fae/robots-txt-plugin\n"
 
 	if p.aiRobotsTxt {
 		aiRobotsTxt, err := p.fetchAiRobotsTxt()
